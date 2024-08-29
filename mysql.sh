@@ -43,7 +43,7 @@ VALIDATE $? "enabled mysql server"
 systemctl start mysqld &>>$LOG_FILE
 VALIDATE $? "started mysql server"
 
-mysql -h mysqld.aws81s.store -u root -pExpenseApp@1 -e 'show databases;' &>>$LOG_FILE
+mysql -h mysql.aws81s.store -u root -pExpenseApp@1 -e 'show databases;' &>>$LOG_FILE
 if [ $? ne 0 ]
 then 
     echo "mysql root password is not setup setup now" &>>$LOG_FILE
