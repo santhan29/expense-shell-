@@ -64,5 +64,29 @@ rm -rf /app/*
 unzip /tmp/backend.zip &>>$LOG_FILE
 VALIDATE $? "extracting backend application code"
 
+npm install &>>$LOG_FILE
+cp /home/ec2-user/expense-shell-/backend.service /etc/systemd/system/backend.service
+
+dnf install mysql -y &>>$LOG_FILE
+VALIDATE $? "installing mysql client"
+
+mysql -h mysqld.aws81s.store -uroot -pExpenseApp@1 < /app/schema/backend.sql &>>$LOG_FILE
+VALIDATE $? "schema loading"
+
+systemctl daemon-reload &>>$LOG_FILE
+VALIDATE $? "daemon reload"
+
+systemctl enable backend &>>$LOG_FILE
+VALIDATE $? "enable backend"
+
+systemctl start backend &>>$LOG_FILE
+VALIDATE $? "restart backend"
+
+
+
+
+
+
+
 
 
